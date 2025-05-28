@@ -6,10 +6,11 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {MessageHashUtils} from "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
 import {ECDSA} from "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import {SIG_VALIDATION_FAILED, SIG_VALIDATION_SUCCESS} from "lib/account-abstraction/contracts/core/Helpers.sol";
+import {IEntryPoint} from "lib/account-abstraction/contracts/interfaces/IEntryPoint.sol";
 contract MinimalAccount is IAccount, Ownable {
-
+    IEntryPoint private immutable i_entryPoint;
     constructor(address entryPoint) Ownable(msg.sender) {
-       
+        i_entryPoint = IEntryPoint(entryPoint);
     }
 
      // A signature is valid, if it's the MinimalAccount owner
@@ -45,6 +46,14 @@ contract MinimalAccount is IAccount, Ownable {
             (bool success,) = payable(msg.sender).call{value: missingAccountFunds, gas: type(uint256).max}("");
             (success);
         }
+    }
+
+
+    /*//////////////////////////////////////////////////////////////
+                                GETTERS
+    //////////////////////////////////////////////////////////////*/
+    function getEntryPoint() external view returns (address) {
+        return address(i_entryPoint);
     }
 }
 
