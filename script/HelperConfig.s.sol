@@ -28,6 +28,7 @@ contract HelperConfig is Script {
     // Update the BURNER_WALLET to your burner wallet!
     address constant BURNER_WALLET = 0x643315C9Be056cDEA171F4e7b2222a4ddaB9F88D;
     address constant ANVIL_DEFAULT_ACCOUNT = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
+    address constant FOUNDRY_DEFAULT_ACCOUNT = 0x1804c8AB1F12E6bbf3894d4083f33e07309d1f38;
     NetworkConfig public localNetworkConfig;
 
     mapping(uint256 chainId => NetworkConfig) public networkConfigs;
