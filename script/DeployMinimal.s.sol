@@ -4,9 +4,12 @@ pragma solidity ^0.8.12;
 import {Script, console2} from "forge-std/Script.sol";
 import {MinimalAccount} from "src/ethereum/MinimalAccount.sol";
 import {HelperConfig} from "script/HelperConfig.s.sol";
+
 contract DeployMinimal is Script {
     function run() public {
         deployMinimalAccount();
+        
+
     }
 
     function deployMinimalAccount() public returns (HelperConfig, MinimalAccount) {

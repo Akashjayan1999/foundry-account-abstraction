@@ -24,6 +24,7 @@ contract HelperConfig is Script {
     uint256 constant ETH_MAINNET_CHAIN_ID = 1;
     uint256 constant ETH_SEPOLIA_CHAIN_ID = 11155111;
     uint256 constant ZKSYNC_SEPOLIA_CHAIN_ID = 300;
+     uint256 constant ARBITRUM_MAINNET_CHAIN_ID = 42_161;
     uint256 constant LOCAL_CHAIN_ID = 31337;
     // Update the BURNER_WALLET to your burner wallet!
     address constant BURNER_WALLET = 0x643315C9Be056cDEA171F4e7b2222a4ddaB9F88D;
@@ -35,6 +36,7 @@ contract HelperConfig is Script {
 
      constructor(){
         networkConfigs[ETH_SEPOLIA_CHAIN_ID] = getEthSepoliaConfig();
+        networkConfigs[ARBITRUM_MAINNET_CHAIN_ID] = getArbMainnetConfig();
      }
     
      function getConfig() public returns (NetworkConfig memory) {
@@ -55,6 +57,13 @@ contract HelperConfig is Script {
             entryPoint: 0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789,
              account: BURNER_WALLET
            });
+    }
+
+      function getArbMainnetConfig() public pure returns (NetworkConfig memory) {
+        return NetworkConfig({
+            entryPoint: 0x0000000071727De22E5E9d8BAf0edAc6f37da032,
+            account: BURNER_WALLET
+        });
     }
 
     function getZkSyncSepoliaConfig() public pure returns (NetworkConfig memory) {
