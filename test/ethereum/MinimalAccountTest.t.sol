@@ -10,7 +10,9 @@ import {SendPackedUserOp,PackedUserOperation,IEntryPoint} from "script/SendPacke
 //import {PackedUserOperation} from "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
 import {ECDSA} from "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import {MessageHashUtils} from "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
-contract MinimalAccountTest is Test{
+import {ZkSyncChainChecker} from "lib/foundry-devops/src/ZkSyncChainChecker.sol";
+
+contract MinimalAccountTest is Test,ZkSyncChainChecker {
     using MessageHashUtils for bytes32;
     HelperConfig helperConfig;
     MinimalAccount minimalAccount;
@@ -33,7 +35,7 @@ contract MinimalAccountTest is Test{
     // USDC contract
     // come from the entrypoint
 
-    function testOwnerCanExecuteCommands() public {
+    function testOwnerCanExecuteCommands() public skipZkSync {
         //Arrange
         assertEq(usdc.balanceOf(address(minimalAccount)), 0);
         address dest = address(usdc);
@@ -59,7 +61,7 @@ contract MinimalAccountTest is Test{
         minimalAccount.execute(dest, value, functionData);
     }
 
-    function testRecoverSignedOp() public{
+    function testRecoverSignedOp() public skipZkSync{
        //Arrange
         assertEq(usdc.balanceOf(address(minimalAccount)), 0);
         address dest = address(usdc);
@@ -83,7 +85,7 @@ contract MinimalAccountTest is Test{
     // 1. Sign user ops
     // 2. Call validate userops
     // 3. Assert the return is correct
-    function testValidationOfUserOps() public{
+    function testValidationOfUserOps() public skipZkSync{
         
         // Arrange
         assertEq(usdc.balanceOf(address(minimalAccount)), 0);
@@ -104,7 +106,7 @@ contract MinimalAccountTest is Test{
         assertEq(validationData, 0);
     }
 
-     function testEntryPointCanExecuteCommands() public{
+     function testEntryPointCanExecuteCommands() public skipZkSync{
         // Arrange
         assertEq(usdc.balanceOf(address(minimalAccount)), 0);
         address dest = address(usdc);
